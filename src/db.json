@@ -1,0 +1,22 @@
+{
+    "tasks": [
+        {
+            "id": 1,
+            "title": "Learn React",
+            "completed": false,
+            "priority": true
+        },
+        {
+            "id": 2,
+            "title": "Create React To-Do App",
+            "completed": false,
+            "priority": true
+        },
+        {
+            "id": 3,
+            "title": "Spotify React Project",
+            "completed": false,
+            "priority": false
+        }
+    ]
+}

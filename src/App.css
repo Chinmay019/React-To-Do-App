@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css?family=Signika");
+@import url("https://fonts.googleapis.com/css?family=Pangolin");
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans");
+@import url("https://fonts.googleapis.com/css?family=Bangers");
+@import url("https://fonts.googleapis.com/css?family=Julee");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  /* color: #000; */
+  /* background-color: #1f1f2c; */
+  line-height: 1.6;
+}
+
+/* 
+ul {
+  list-style: none;
+} */
+
+.header {
+  background-color: rgb(54, 25, 79);
+  width: 100%;
+  height: 100%;
+  font-size: 40px;
+  font-family: Pangolin, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  color: #fffdfc;
+}
+
+.container {
+  padding: 0 20px;
+  /* max-width: 900px; */
+}
+
+.info-class {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: large;
+  font-weight: 600;
+}
+
+.item-layout {
+  box-sizing: border-box;
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 2px solid black;
+  background-color: #fff;
+  height: 56px;
+}
+
+.list-layout {
+  box-sizing: border-box;
+  border-radius: 8px;
+  height: 100%;
+  display: block;
+  padding: 10px 0;
+  width: 100%;
+  min-width: 240px;
+}
+
+.task-list {
+  display: block;
+}
+
+.task-title {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  width: 100%;
+  font-family: "Fira Sans", Signika, serif;
+  padding-left: 15px;
+}
+
+.priority-card {
+  /* color: #2344d8; */
+  color: #0758eef3;
+  /* background-color: #16c8dfe1; */
+  background-color: #0ae2f1fb;
+}
+
+.completed-card {
+  text-decoration: line-through;
+  color: grey;
+  background-color: lightgray;
+}
+
+.delete-container {
+  padding: 8px;
+}
+
+.delete {
+  border-radius: 25%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.complete-container {
+  padding: 8px;
+}
+
+.edit-container {
+  padding: 8px;
+}
+
+.complete {
+  border-radius: 25%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.form-container {
+  width: 100%;
+  padding: auto;
+  margin: 10px auto;
+  gap: 4px;
+}
+
+.priority-star {
+  margin-left: 10px;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  fill: inherit;
+}
+
+.completed-star {
+  margin-left: 10px;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+
+.about-icon {
+  position: fixed;
+  display: flex;
+  justify-content: end;
+  margin: 10px;
+  right: 0%;
+  bottom: 0%;
+}
+
+.empty-task-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  height: 400px;
+  text-align: center;
+  color: #0786ee;
+  font-weight: 600;
+  font-size: 40px;
+  font-family: Julee, Bangers, "Fira Sans", Signika, Arial, sans-serif;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  order: 1;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 600px;
+}
+
+.flex-item {
+  max-width: 150px;
+}
