@@ -1,0 +1,46 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Learn React backend",
+      "completed": false,
+      "priority": true
+    },
+    {
+      "id": 2,
+      "title": "Create React To-Do App",
+      "completed": false,
+      "priority": true
+    },
+    {
+      "id": 3,
+      "title": "Spotify React Project",
+      "completed": false,
+      "priority": false
+    },
+    {
+      "id": 4,
+      "title": "Car driving",
+      "completed": true,
+      "priority": true
+    },
+    {
+      "id": 5,
+      "title": "Work on UPDATE API bug",
+      "completed": false,
+      "priority": false
+    },
+    {
+      "id": 6,
+      "title": "Safety case story",
+      "completed": true,
+      "priority": false
+    },
+    {
+      "id": 7,
+      "title": "File IT returns",
+      "completed": true,
+      "priority": true
+    }
+  ]
+}

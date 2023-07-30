@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Item from "./Item";
 import { useContext } from "react";
+import Loader from "../shared/Loader";
 import ToDoContext from "../context/ToDoContext";
 
 function List() {
@@ -11,54 +12,17 @@ function List() {
     remaining,
     priority,
     currentView,
+    loading,
   } = useContext(ToDoContext);
 
-  // useEffect(() => {
-  //   console.log(
-  //     "useEffect in list",
-  //     "priority : ",
-  //     priority,
-  //     "completed: ",
-  //     completed,
-  //     "remaining : ",
-  //     remaining
-  //   );
-  //   handleNullCheck();
-  // }, [priority, completed, remaining]);
-
-  const handleNullCheck = () => {
-    // console.log("handleNullCheck");
-    console.log(
-      "handleNullCheck",
-      "priority : ",
-      priority,
-      "completed: ",
-      completed,
-      "remaining : ",
-      remaining
-    );
-    if (!taskList || !taskList.length) {
-      return (
-        <div className="empty-task-list">
-          No Tasks Left. Hurray!!!!!!!!!!!!!!
-        </div>
-      );
-    }
-    if (priority == 0) {
-      console.log(priority);
-      return (
-        <div className="empty-task-list">
-          No Priority Tasks Left. Hurray!!!!!!!!!!!!!!
-        </div>
-      );
-    }
-  };
-
-  if (!taskList || !taskList.length) {
+  if (loading) {
+    return <Loader />;
+  } else if (!loading && (!taskList || !taskList.length)) {
     return (
       <div className="empty-task-list">No Tasks Left. Hurray!!!!!!!!!!!!!!</div>
     );
   } else if (
+    !loading &&
     taskList.length &&
     !remaining &&
     currentView === "remaining" &&
@@ -70,13 +34,23 @@ function List() {
         Way to go champ!!!!!!!
       </div>
     );
-  } else if (taskList.length && !priority && currentView === "priority") {
+  } else if (
+    !loading &&
+    taskList.length &&
+    !priority &&
+    currentView === "priority"
+  ) {
     return (
       <div className="empty-task-list">
         No Priority Tasks Left. <br />I see this as an absolute win!!!!!
       </div>
     );
-  } else if (taskList.length && !completed && currentView === "completed") {
+  } else if (
+    !loading &&
+    taskList.length &&
+    !completed &&
+    currentView === "completed"
+  ) {
     return (
       <div className="empty-task-list">
         Tasks yet to be Completed. <br />

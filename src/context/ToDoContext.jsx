@@ -5,8 +5,9 @@ import TaskData from "../data";
 export const ToDoContext = createContext();
 
 export const ToDoProvider = ({ children }) => {
-  const [taskList, setTaskList] = useState(TaskData);
-  const [filteredTaskList, setFilteredTaskList] = useState(TaskData);
+  const [taskList, setTaskList] = useState([]);
+  const [filteredTaskList, setFilteredTaskList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [priority, setPriority] = useState();
   const [remaining, setRemaining] = useState();
   const [completed, setCompleted] = useState();
@@ -17,11 +18,26 @@ export const ToDoProvider = ({ children }) => {
   });
 
   useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  useEffect(() => {
     priorityCount();
     completedCount();
     remainingCount();
     filterTasks();
   }, [taskList, currentView]);
+
+  // fetch tasks
+  const fetchTasks = async () => {
+    setLoading(true);
+    const response = await fetch(
+      `http://localhost:3000/tasks?_sort=id&order=desc`
+    );
+    const tasks = await response.json();
+    setTaskList(tasks);
+    setLoading(false);
+  };
 
   const priorityCount = () => {
     setPriority(
@@ -158,6 +174,7 @@ export const ToDoProvider = ({ children }) => {
         priority,
         currentView,
         setCurrentView,
+        loading,
       }}
     >
       {children}
