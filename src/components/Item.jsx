@@ -11,11 +11,13 @@ import {
 } from "react-icons/fa";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import CustomCard from "../shared/CustomCard";
+import DeleteDialog from "./DeleteDialog";
 
 function Item({ item }) {
   const { deleteItem, completeItem, editItem, updateState } =
     useContext(ToDoContext);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   return (
     <CustomCard>
@@ -64,7 +66,6 @@ function Item({ item }) {
             id={item.id}
             item={item}
           />
-          {/* <EditDialog item={item} /> */}
           <div className="complete-container">
             <button
               onClick={() => completeItem(item.id, item)}
@@ -74,10 +75,15 @@ function Item({ item }) {
             </button>
           </div>
           <div className="delete-container">
-            <button onClick={() => deleteItem(item.id)} className="delete">
+            <button onClick={() => setShowDeleteModal(true)} className="delete">
               <FaTrash />
             </button>
           </div>
+          <DeleteDialog
+            show={showDeleteModal}
+            close={() => setShowDeleteModal(false)}
+            id={item.id}
+          />
         </div>
       </div>
     </CustomCard>

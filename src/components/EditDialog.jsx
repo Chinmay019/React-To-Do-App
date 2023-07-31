@@ -16,6 +16,7 @@ function EditDialog(props) {
       <Modal
         centered
         backdrop="static"
+        aria-labelledby="Edit Modal"
         show={props.show}
         onHide={props.close}
         keyboard={false}
