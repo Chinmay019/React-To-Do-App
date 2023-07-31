@@ -1,10 +1,9 @@
 import { createContext, useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import TaskData from "../data";
 
 export const ToDoContext = createContext();
 
 export const ToDoProvider = ({ children }) => {
+  const commonURL = `http://localhost:3509`;
   const [taskList, setTaskList] = useState([]);
   const [filteredTaskList, setFilteredTaskList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,6 +21,16 @@ export const ToDoProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    window.onbeforeunload = function () {
+      setCurrentView("all");
+    };
+
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, [currentView]);
+
+  useEffect(() => {
     priorityCount();
     completedCount();
     remainingCount();
@@ -31,9 +40,7 @@ export const ToDoProvider = ({ children }) => {
   // fetch tasks
   const fetchTasks = async () => {
     setLoading(true);
-    const response = await fetch(
-      `http://localhost:3000/tasks?_sort=id&order=desc`
-    );
+    const response = await fetch(`${commonURL}/tasks?_sort=id&_order=asc`);
     const tasks = await response.json();
     setTaskList(tasks);
     setLoading(false);
@@ -63,7 +70,8 @@ export const ToDoProvider = ({ children }) => {
     );
   };
 
-  const deleteItem = (id) => {
+  const deleteItem = async (id) => {
+    await fetch(`${commonURL}/tasks/${id}`, { method: "DELETE" });
     setTaskList(
       taskList.filter((task) => {
         return task.id !== id;
@@ -71,9 +79,16 @@ export const ToDoProvider = ({ children }) => {
     );
   };
 
-  const addItem = (newTodo) => {
-    newTodo.id = uuidv4().toString();
-    setTaskList([newTodo, ...taskList]);
+  const addItem = async (newTodo) => {
+    const response = await fetch(`${commonURL}/tasks`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTodo),
+    });
+    const data = await response.json();
+    setTaskList([data, ...taskList]);
   };
 
   const editItem = (item) => {
@@ -83,25 +98,24 @@ export const ToDoProvider = ({ children }) => {
     });
   };
 
-  const completeItem = (id) => {
-    setTaskList(
-      taskList.map((task) => {
-        if (task.id === id) {
-          task.completed = !task.completed;
-        }
-        return task;
-      })
-    );
+  const completeItem = async (id, item) => {
+    item.completed = !item.completed;
+    updateTask(id, item);
   };
 
-  const updateTitle = (id, newTitle) => {
+  const updateTask = async (id, updatedItem) => {
+    const response = await fetch(`${commonURL}/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedItem),
+    });
+
+    const data = await response.json();
+
     setTaskList(
-      taskList.map((task) => {
-        if (task.id === id) {
-          task.title = newTitle;
-        }
-        return task;
-      })
+      taskList.map((task) => (task.id === id ? { ...task, ...data } : task))
     );
   };
 
@@ -114,7 +128,6 @@ export const ToDoProvider = ({ children }) => {
         return task;
       })
     );
-    setFilteredTaskList([...taskList]);
   };
 
   const updateState = (item) => {
@@ -122,6 +135,7 @@ export const ToDoProvider = ({ children }) => {
     // do not un-complete completed tasks
     if (!item.completed) {
       updatePriority(item.id);
+      updateTask(item.id, item);
     }
   };
 
@@ -164,11 +178,10 @@ export const ToDoProvider = ({ children }) => {
         completeItem,
         editItem,
         itemEdit,
-        updateTitle,
+        updateTask,
         updateState,
         filterTasks,
         filteredTaskList,
-        sortFunc,
         completed,
         remaining,
         priority,

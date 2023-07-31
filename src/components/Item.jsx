@@ -13,14 +13,8 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import CustomCard from "../shared/CustomCard";
 
 function Item({ item }) {
-  const {
-    deleteItem,
-    completeItem,
-    editItem,
-    itemEdit,
-    updateTitle,
-    updateState,
-  } = useContext(ToDoContext);
+  const { deleteItem, completeItem, editItem, updateState } =
+    useContext(ToDoContext);
   const [showEditModal, setShowEditModal] = useState(false);
 
   return (
@@ -68,10 +62,14 @@ function Item({ item }) {
             close={() => setShowEditModal(false)}
             title={item.title}
             id={item.id}
+            item={item}
           />
           {/* <EditDialog item={item} /> */}
           <div className="complete-container">
-            <button onClick={() => completeItem(item.id)} className="complete">
+            <button
+              onClick={() => completeItem(item.id, item)}
+              className="complete"
+            >
               <FaCheck />
             </button>
           </div>

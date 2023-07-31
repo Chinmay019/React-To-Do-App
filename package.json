@@ -3,13 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "proxy": "http://localhost:3509",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "server": "json-server --watch db.json",
-    "watch": "concurrently \"npm run server\" \"npm run dev\""
+    "server": "json-server --watch db.json --port 3509",
+    "servewatch": "concurrently \"npm run server\" \"npm run dev\""
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.4.0",

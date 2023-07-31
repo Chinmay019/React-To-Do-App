@@ -5,11 +5,10 @@ import Button from "react-bootstrap/Button";
 import ToDoContext from "../context/ToDoContext";
 
 function EditDialog(props) {
-  const [newTitle, setNewTitle] = useState(props.title);
-  const { updateTitle } = useContext(ToDoContext);
+  const { updateTask } = useContext(ToDoContext);
 
   const handleChange = (e) => {
-    setNewTitle(e.target.value);
+    props.item.title = e.target.value;
   };
 
   return (
@@ -30,7 +29,7 @@ function EditDialog(props) {
               <Form.Control
                 type="text"
                 autoFocus
-                defaultValue={newTitle}
+                defaultValue={props.title}
                 onChange={handleChange}
                 placeholder="Enter a value"
               />
@@ -44,7 +43,7 @@ function EditDialog(props) {
           <Button
             variant="primary"
             onClick={() => {
-              updateTitle(props.id, newTitle);
+              updateTask(props.id, props.item);
               props.close();
             }}
           >
