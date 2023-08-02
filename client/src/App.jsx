@@ -1,4 +1,5 @@
 import "./App.css";
+import React, { useState, useContext, useEffect } from "react";
 import List from "./components/List";
 import Header from "./components/Header";
 import Counter from "./components/Counter";
@@ -7,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AboutPage from "./pages/AboutPage";
 import ScrollButton from "./components/ScrollButton";
 import { ToDoProvider } from "./context/ToDoContext";
+import LoginModal from "./components/LoginModal";
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
               path="/"
               element={
                 <>
+                  <LoginModal />
                   <Input />
                   <Counter />
                   <List />

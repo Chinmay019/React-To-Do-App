@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Item from "./Item";
 import { useContext } from "react";
 import Loader from "../shared/Loader";
 import ToDoContext from "../context/ToDoContext";
+import LoginModal from "./LoginModal";
 
 function List() {
   const {
@@ -13,7 +14,25 @@ function List() {
     priority,
     currentView,
     loading,
+    isLoggedIn,
   } = useContext(ToDoContext);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  useEffect(() => {
+    renderLoginModal();
+  }, []);
+
+  const renderLoginModal = () => {
+    if (!isLoggedIn) {
+      setShowLoginModal(!isLoggedIn);
+      return (
+        <LoginModal
+          show={showLoginModal}
+          close={() => setShowLoginModal(false)}
+        />
+      );
+    }
+  };
 
   if (loading) {
     return <Loader />;

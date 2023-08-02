@@ -7,6 +7,8 @@ export const ToDoProvider = ({ children }) => {
   const [taskList, setTaskList] = useState([]);
   const [filteredTaskList, setFilteredTaskList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState();
   const [priority, setPriority] = useState();
   const [remaining, setRemaining] = useState();
   const [completed, setCompleted] = useState();
@@ -188,6 +190,10 @@ export const ToDoProvider = ({ children }) => {
         currentView,
         setCurrentView,
         loading,
+        isLoggedIn,
+        setIsLoggedIn,
+        userName,
+        setUserName,
       }}
     >
       {children}
