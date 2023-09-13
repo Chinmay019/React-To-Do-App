@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Counter() {
   const {
     taskList,
-    filterTasks,
+    // filterTasks,
     priority,
     remaining,
     completed,
@@ -14,7 +14,7 @@ function Counter() {
   } = useContext(ToDoContext);
   const [filter, setFilter] = useState("all");
   useEffect(() => {
-    filterTasks(filter);
+    // filterTasks(filter);
     handleClick(filter);
   }, [filter]);
 

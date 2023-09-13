@@ -3,61 +3,60 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ToDoContext from "../context/ToDoContext";
-import { useFormik } from "formik";
 
 function LoginModal() {
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(true);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [user, setUser] = useState("");
   const [validated, setValidated] = useState(false);
-  const { isLoggedIn, userName, setUserName, setIsLoggedIn } =
-    useContext(ToDoContext);
+  const { isLoggedIn, dispatch } = useContext(ToDoContext);
   useEffect(() => {
     renderLoginModal();
   }, [showLoginModal]);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  // const handleSubmit = (event) => {
+  //   const form = event.currentTarget;
+  //   if (form.checkValidity() === false) {
+  //     event.preventDefault();
+  //     event.stopPropagation();
+  //   }
 
-    setValidated(true);
-  };
-
-  const formik = useFormik({
-    initialValues: {
-      userName: "",
-    },
-    onSubmit: (values) => {
-      console.log("values", values);
-    },
-  });
+  //   setValidated(true);
+  // };
 
   const renderLoginModal = () => {
     if (!isLoggedIn) {
       setShowLoginModal(!isLoggedIn);
-      //   return (
-      //     <LoginModal
-      //       show={showLoginModal}
-      //       close={() => setShowLoginModal(false)}
-      //     />
-      //   );
+      return (
+        <LoginModal
+          show={showLoginModal}
+          close={() => setShowLoginModal(false)}
+        />
+      );
+    }
+  };
+  const setUserName = (e) => {
+    e.preventDefault();
+    if (validUserName()) {
+      dispatch({ type: "SET_USERNAME", payload: user });
+      setShowLoginModal(false);
+      dispatch({ type: "SET_LOGGED_IN", payload: true });
+    } else {
+      console.log("Please enter a valid userName");
+      setShowErrorMessage(true);
     }
   };
   const handleChange = (e) => {
-    setUserName(e.target.value);
+    setUser(e.target.value);
     console.log(e.target.value);
   };
   const validUserName = () => {
-    if (userName.length > 3) {
-      console.log(userName);
-      setIsLoggedIn(true);
+    if (user.length > 3) {
+      console.log(user);
       return true;
     }
     return false;
   };
-  //   console.log(formik.values);
   return (
     <div>
       <Modal
@@ -73,9 +72,20 @@ function LoginModal() {
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="error-message">Test error message</div>
-          <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <div
+            className="error-message"
+            style={{ display: showErrorMessage ? "block" : "none" }}
+          >
+            Test error message
+          </div>
+          <Form noValidate>
+            {/* validated={validated} onSubmit={handleSubmit} */}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Text id="passwordHelpBlock" className="mb-3 text-xl">
+                Your username must be 3-20 characters long, contain letters and
+                numbers, and must not contain spaces, special characters, or
+                emoji.
+              </Form.Text>
               <Form.Control
                 type="text"
                 name="userName"
@@ -95,13 +105,7 @@ function LoginModal() {
           <Button
             variant="primary"
             type="submit"
-            onClick={() => {
-              if (validUserName()) {
-                setShowLoginModal(false);
-              } else {
-                console.log("Please");
-              }
-            }}
+            onClick={(e) => setUserName(e)}
           >
             Login
           </Button>

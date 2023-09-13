@@ -4,6 +4,7 @@ import { useContext } from "react";
 import Loader from "../shared/Loader";
 import ToDoContext from "../context/ToDoContext";
 import LoginModal from "./LoginModal";
+import { fetchTasks, getUserTasks } from "../context/TodoActions";
 
 function List() {
   const {
@@ -11,16 +12,30 @@ function List() {
     filteredTaskList,
     completed,
     remaining,
+    userName,
     priority,
     currentView,
     loading,
     isLoggedIn,
+    dispatch,
   } = useContext(ToDoContext);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
-    renderLoginModal();
-  }, []);
+    // if (!isLoggedIn) {
+    //   renderLoginModal();
+    // } else {
+    if (isLoggedIn) {
+      const getTaskList = async () => {
+        dispatch({ type: "SET_LOADING", payload: true });
+        const data = await getUserTasks(userName);
+        console.log(data);
+        dispatch({ type: "SET_TASKS_FROM_DB", payload: data });
+        dispatch({ type: "SET_LOADING", payload: false });
+      };
+      getTaskList();
+    }
+  }, [userName]);
 
   const renderLoginModal = () => {
     if (!isLoggedIn) {
@@ -79,7 +94,7 @@ function List() {
   } else {
     return (
       <div className="task-list">
-        {filteredTaskList.map((item) => (
+        {taskList.map((item) => (
           <Item key={item.id} item={item} />
         ))}
       </div>

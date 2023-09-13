@@ -1,32 +1,25 @@
 import express from "express"
-import Connection from "./database/db.js";
-import To_Do_Collection from "./models/schema.js";
-import router from "./routes/route.js";
-
+import { getAllUsers, getTask, getUserById, createUser, updateTask, getUserByUserName } from "./controller/controller.js";
+// import router from "./routes/route.js";
+import cors from "cors";
 const app = express();
 
 app.use(express.json());
 
+app.use(cors());
+
 const PORT = process.env.PORT || 11243;
 
-app.get('/', (req, res) => {
-    res.send("testing ");
-})
+app.get('/users', getAllUsers)
 
-app.use("/test", router);
+// app.get("/users/:id", getUserById)
 
-Connection();
+app.get("/users/:userName", getUserByUserName);
 
-app.post("/todos", async (req, res) => {
-    console.log(req.body);
-    const todo = new To_Do_Collection(req.body);
-    try {
-        const newToDo = await todo.save();
-        res.status(201).send(newToDo);
-    } catch (err) {
-        console.log(err);
-        res.status(400).send(err);
-    }
-})
+app.get("/tasks/:id", getTask)
+
+// app.post("/users", createUser)
+
+app.put("/tasks/:id", updateTask)
 
 app.listen(PORT, () => { console.log("Port running on : " + PORT); });

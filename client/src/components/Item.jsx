@@ -14,8 +14,7 @@ import CustomCard from "../shared/CustomCard";
 import DeleteDialog from "./DeleteDialog";
 
 function Item({ item }) {
-  const { deleteItem, completeItem, editItem, updateState } =
-    useContext(ToDoContext);
+  const { deleteItem, completeItem, editItem } = useContext(ToDoContext);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -31,7 +30,9 @@ function Item({ item }) {
               : "none"
           }`}
         >
-          <div onClick={() => updateState(item)}>
+          <div>
+            {" "}
+            {/*onClick={() => updateState(item)} */}
             {item.completed ? (
               <div title="Completed">
                 <BsFillCheckCircleFill className="completed-star" />
