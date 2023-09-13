@@ -97,22 +97,6 @@ export const ToDoProvider = ({ children }) => {
   //   updateTask(id, item);
   // };
 
-  const updateTask = async (id, updatedItem) => {
-    const response = await fetch(`${commonURL}/tasks/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedItem),
-    });
-
-    const data = await response.json();
-    return data;
-    // setTaskList(
-    //   taskList.map((task) => (task.id === id ? { ...task, ...data } : task))
-    // );
-  };
-
   // const updatePriority = (id) => {
   //   setTaskList(
   //     taskList.map((task) => {
@@ -172,7 +156,6 @@ export const ToDoProvider = ({ children }) => {
         addItem,
         // completeItem,
         // editItem,
-        updateTask,
         // updateState,
         // filterTasks,
       }}

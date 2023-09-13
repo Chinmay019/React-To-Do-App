@@ -95,7 +95,7 @@ function List() {
     return (
       <div className="task-list">
         {taskList.map((item) => (
-          <Item key={item.id} item={item} />
+          <Item key={item._id} item={item} />
         ))}
       </div>
     );

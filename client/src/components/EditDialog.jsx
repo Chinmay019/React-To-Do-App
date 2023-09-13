@@ -1,12 +1,9 @@
-import { useContext, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import ToDoContext from "../context/ToDoContext";
+import { updateTask } from "../context/TodoActions";
 
 function EditDialog(props) {
-  const { updateTask } = useContext(ToDoContext);
-
   const handleChange = (e) => {
     props.item.title = e.target.value;
   };
@@ -44,7 +41,7 @@ function EditDialog(props) {
           <Button
             variant="primary"
             onClick={() => {
-              updateTask(props.id, props.item);
+              updateTask(props.item);
               props.close();
             }}
           >

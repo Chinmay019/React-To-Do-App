@@ -34,6 +34,21 @@ const fetchTasks = async () => {
     return tasks;
 };
 
+export const updateTask = async (updatedItem) => {
+    console.log('updateTask', updatedItem);
+    const id = updatedItem._id;
+    const response = await fetch(`${commonBackendURL}/tasks/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedItem),
+    });
+
+    const data = await response.json();
+    return data;
+};
+
 const refreshCount = (taskList) => {
     const prioCount = priorityCount(taskList);
     const compCount = completedCount(taskList);
