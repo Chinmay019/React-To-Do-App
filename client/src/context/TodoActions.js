@@ -1,31 +1,19 @@
 const commonURL = `http://localhost:3509`;
 const commonBackendURL = `http://localhost:11243`;
 
-export const getUser = async (userName) => {
+export const getUserTasks = async (userName) => {
     const resp = await fetch(`${commonBackendURL}/users/${userName}`)
     const data = await resp.json();
-    return data;
+    console.log(data);
+    const userInfo = data[0];
+    return { taskList: userInfo.userTasks, userId: userInfo.userId, userName: userInfo.userName, _id: userInfo._id };
+    // return data;
 }
 
 export const getTask = async (id) => {
     const resp = await fetch(`${commonBackendURL}/tasks/${id}`);
     const data = await resp.json();
     return data;
-}
-
-export const getUserTasks = async (userName) => {
-    const data = await getUser(userName);
-    const userInfo = data[0];
-    console.log(userInfo);
-    const taskIDsList = userInfo.tasks;
-    const taskList = await Promise.all(taskIDsList.map(async (id) => {
-        const data = await getTask(id);
-        return data;
-    }));
-    console.log(taskList);
-    // userInfo.taskList = taskList;
-    // return userInfo;
-    return taskList;
 }
 
 const fetchTasks = async () => {
@@ -44,10 +32,28 @@ export const updateTask = async (updatedItem) => {
         },
         body: JSON.stringify(updatedItem),
     });
-
     const data = await response.json();
     return data;
 };
+
+export const deleteItem = async (id) => {
+    console.log(id);
+    const resp = await fetch(`${commonBackendURL}/tasks/${id}`, { method: "DELETE" });
+    return resp.json();
+};
+
+export const updateUserTasks = async (userName, userId, payload) => {
+    const resp = await fetch(`${commonBackendURL}/users/${userName}/${userId}`, {
+        method: "PUT",
+        body: JSON.stringify(payload),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    const data = await resp.json();
+    console.log(data);
+    return data;
+}
 
 const refreshCount = (taskList) => {
     const prioCount = priorityCount(taskList);

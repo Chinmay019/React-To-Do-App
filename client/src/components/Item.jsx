@@ -23,17 +23,16 @@ function Item({ item }) {
       <div>
         <div
           className={`item-layout ${
-            item.completed
+            item.completed == "true"
               ? "completed-card"
-              : item.priority
+              : item.priority == "true"
               ? "priority-card"
               : "none"
           }`}
         >
           <div>
-            {" "}
             {/*onClick={() => updateState(item)} */}
-            {item.completed ? (
+            {item.completed == "true" ? (
               <div title="Completed">
                 <BsFillCheckCircleFill className="completed-star" />
               </div>
@@ -64,12 +63,12 @@ function Item({ item }) {
             show={showEditModal}
             close={() => setShowEditModal(false)}
             title={item.title}
-            id={item.id}
+            id={item._id}
             item={item}
           />
           <div className="complete-container">
             <button
-              onClick={() => completeItem(item.id, item)}
+              onClick={() => completeItem(item._id, item)}
               className="complete"
             >
               <FaCheck />
@@ -83,7 +82,7 @@ function Item({ item }) {
           <DeleteDialog
             show={showDeleteModal}
             close={() => setShowDeleteModal(false)}
-            id={item.id}
+            id={item._id}
           />
         </div>
       </div>

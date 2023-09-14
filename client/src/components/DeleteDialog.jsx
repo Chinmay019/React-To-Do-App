@@ -1,10 +1,30 @@
 import React, { useContext } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { deleteItem, updateUserTasks } from "../context/TodoActions";
 import ToDoContext from "../context/ToDoContext";
 
 function DeleteDialog(props) {
-  const { deleteItem } = useContext(ToDoContext);
+  const { dispatch, user_Id, taskList, userName } = useContext(ToDoContext);
+
+  const buildPayload = () => {
+    const filteredList = taskList.filter((task) => task._id !== props.id);
+    // tasks.push(...filteredList);
+    return filteredList;
+  };
+
+  const handleDeleteClick = (e) => {
+    e.preventDefault();
+    dispatch({ type: "SET_LOADING", payload: true });
+    // const data = deleteItem(props.id);
+    // console.log(data);
+    const payload = buildPayload();
+    console.log("payload: ", payload);
+    const userData = updateUserTasks(userName, user_Id, payload);
+    console.log("userData: ", userData);
+    dispatch({ type: "SET_LOADING", payload: false });
+    props.close();
+  };
   return (
     <div>
       <Modal
@@ -27,13 +47,7 @@ function DeleteDialog(props) {
           <Button variant="secondary" onClick={props.close}>
             Close
           </Button>
-          <Button
-            variant="danger"
-            onClick={() => {
-              deleteItem(props.id);
-              props.close();
-            }}
-          >
+          <Button variant="danger" onClick={(e) => handleDeleteClick(e)}>
             Delete
           </Button>
         </Modal.Footer>

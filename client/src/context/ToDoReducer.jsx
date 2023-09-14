@@ -54,6 +54,12 @@ const TodoReducer = (state, action) => {
         ...state,
         userName: action.payload,
       };
+    case "SET_USER_ID":
+      return {
+        ...state,
+        userId: action.payload.userId,
+        user_Id: action.payload.user_Id,
+      };
     case "SET_LOGGED_IN":
       return {
         ...state,

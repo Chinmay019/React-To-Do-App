@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
 
 const TaskSchema = mongoose.Schema(
@@ -18,6 +19,10 @@ const TaskSchema = mongoose.Schema(
         },
         createdAt: {
             type: Date,
+            required: true,
+        },
+        userId: {
+            type: ObjectId,
             required: true,
         }
     }

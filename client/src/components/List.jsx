@@ -30,7 +30,11 @@ function List() {
         dispatch({ type: "SET_LOADING", payload: true });
         const data = await getUserTasks(userName);
         console.log(data);
-        dispatch({ type: "SET_TASKS_FROM_DB", payload: data });
+        dispatch({ type: "SET_TASKS_FROM_DB", payload: data.taskList });
+        dispatch({
+          type: "SET_USER_ID",
+          payload: { userId: data.userId, user_Id: data._id },
+        });
         dispatch({ type: "SET_LOADING", payload: false });
       };
       getTaskList();

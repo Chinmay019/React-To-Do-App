@@ -9,8 +9,9 @@ export const ToDoProvider = ({ children }) => {
     filteredTaskList: [],
     loading: false,
     isLoggedIn: false,
-    isExistingUser: false,
+    user_Id: null,
     userName: null,
+    userId: null,
     priority: null,
     remaining: null,
     completed: null,
@@ -61,16 +62,6 @@ export const ToDoProvider = ({ children }) => {
   //   setTaskList(tasks);
   //   setLoading(false);
   // };
-
-  const deleteItem = async (id) => {
-    const resp = await fetch(`${commonURL}/tasks/${id}`, { method: "DELETE" });
-    return resp.json();
-    // setTaskList(
-    //   taskList.filter((task) => {
-    //     return task.id !== id;
-    //   })
-    // );
-  };
 
   const addItem = async (newTodo) => {
     const response = await fetch(`${commonURL}/tasks`, {
@@ -152,7 +143,7 @@ export const ToDoProvider = ({ children }) => {
       value={{
         ...state,
         dispatch,
-        deleteItem,
+        // deleteItem,
         addItem,
         // completeItem,
         // editItem,
