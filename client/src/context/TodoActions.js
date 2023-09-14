@@ -6,8 +6,37 @@ export const getUserTasks = async (userName) => {
     const data = await resp.json();
     console.log(data);
     const userInfo = data[0];
-    return { taskList: userInfo.userTasks, userId: userInfo.userId, userName: userInfo.userName, _id: userInfo._id };
+    return { taskList: userInfo.userTasks, userId: userInfo.user_Id, userName: userInfo.userName, _id: userInfo._id };
     // return data;
+}
+
+export const createUser = async (userName, userId) => {
+    const payload = {
+        userName: userName,
+        user_Id: userId,
+        userTasks: []
+    }
+    const resp = await fetch(`${commonBackendURL}/users`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    const data = await resp.json();
+    return data;
+}
+
+export const checkIfExistingUser = async (userName) => {
+    let userExists = false;
+    const resp = await fetch(`${commonBackendURL}/users/${userName}`);
+    const data = await resp.json();
+    const userInfo = data && data.length && data[0];
+    if (resp.status === 200) {
+        userExists = true;
+    }
+    console.log("existing user data", data);
+    return { existingUser: userExists, userData: userInfo };
 }
 
 export const getTask = async (id) => {

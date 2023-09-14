@@ -5,7 +5,7 @@ import { deleteItem, updateUserTasks } from "../context/TodoActions";
 import ToDoContext from "../context/ToDoContext";
 
 function DeleteDialog(props) {
-  const { dispatch, user_Id, taskList, userName } = useContext(ToDoContext);
+  const { dispatch, user_OId, taskList, userName } = useContext(ToDoContext);
 
   const buildPayload = () => {
     const filteredList = taskList.filter((task) => task._id !== props.id);
@@ -20,7 +20,7 @@ function DeleteDialog(props) {
     // console.log(data);
     const payload = buildPayload();
     console.log("payload: ", payload);
-    const userData = updateUserTasks(userName, user_Id, payload);
+    const userData = updateUserTasks(userName, user_OId, payload);
     console.log("userData: ", userData);
     dispatch({ type: "SET_LOADING", payload: false });
     props.close();

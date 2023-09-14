@@ -3,13 +3,15 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ToDoContext from "../context/ToDoContext";
+import { v4 as uuidv4 } from "uuid";
+import { createUser, checkIfExistingUser } from "../context/TodoActions";
 
 function LoginModal() {
   const [showLoginModal, setShowLoginModal] = useState(true);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [user, setUser] = useState("");
   const [validated, setValidated] = useState(false);
-  const { isLoggedIn, dispatch } = useContext(ToDoContext);
+  const { isLoggedIn, dispatch, isExistingUser } = useContext(ToDoContext);
   useEffect(() => {
     renderLoginModal();
   }, [showLoginModal]);
@@ -23,6 +25,26 @@ function LoginModal() {
 
   //   setValidated(true);
   // };
+
+  const createUserIfNotExisting = async () => {
+    const { existingUser, userData } = await checkIfExistingUser(user);
+    console.log(existingUser);
+    console.log(userData);
+    if (!existingUser) {
+      const userId = uuidv4();
+      console.log(userId);
+      const data = await createUser(user, userId);
+      console.log(data);
+    } else {
+      dispatch({
+        type: "SET_USER_ID",
+        payload: { userId: userData.user_Id, user_OId: userData._id },
+      });
+      dispatch({ type: "SET_LOGGED_IN", payload: true });
+      dispatch({ type: "SET_TASKS_FROM_DB", payload: userData.userTasks });
+    }
+    dispatch({ type: "SET_EXISTING_USER_STATUS", payload: existingUser });
+  };
 
   const renderLoginModal = () => {
     if (!isLoggedIn) {
@@ -38,6 +60,7 @@ function LoginModal() {
   const setUserName = (e) => {
     e.preventDefault();
     if (validUserName()) {
+      createUserIfNotExisting();
       dispatch({ type: "SET_USERNAME", payload: user });
       setShowLoginModal(false);
       dispatch({ type: "SET_LOGGED_IN", payload: true });

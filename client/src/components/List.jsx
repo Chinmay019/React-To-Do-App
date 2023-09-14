@@ -18,28 +18,29 @@ function List() {
     loading,
     isLoggedIn,
     dispatch,
+    isExistingUser,
   } = useContext(ToDoContext);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
-    // if (!isLoggedIn) {
-    //   renderLoginModal();
-    // } else {
     if (isLoggedIn) {
       const getTaskList = async () => {
-        dispatch({ type: "SET_LOADING", payload: true });
-        const data = await getUserTasks(userName);
-        console.log(data);
-        dispatch({ type: "SET_TASKS_FROM_DB", payload: data.taskList });
-        dispatch({
-          type: "SET_USER_ID",
-          payload: { userId: data.userId, user_Id: data._id },
-        });
-        dispatch({ type: "SET_LOADING", payload: false });
+        if (!isExistingUser) {
+          console.log(isExistingUser);
+          dispatch({ type: "SET_LOADING", payload: true });
+          const { userId, _id, taskList } = await getUserTasks(userName);
+          console.log(data);
+          dispatch({
+            type: "SET_USER_ID",
+            payload: { userId: userId, user_OId: _id },
+          });
+          dispatch({ type: "SET_TASKS_FROM_DB", payload: taskList });
+          dispatch({ type: "SET_LOADING", payload: false });
+        }
       };
       getTaskList();
     }
-  }, [userName]);
+  }, []);
 
   const renderLoginModal = () => {
     if (!isLoggedIn) {

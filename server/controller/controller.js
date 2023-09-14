@@ -62,25 +62,41 @@ export const getUserById = async (req, res) => {
     }
 }
 
-export const getUserInfo = async (req, res) => {
-    try {
-        const { userName } = req.params;
-        const { userInfo, user_Id } = await getUserByUserName(userName);
-        const userTasks = await getUserTasks(user_Id);
-        res.status(200).json(userTasks);
-        return userTasks;
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-}
+// export const getUserInfo = async (req, res) => {
+//     try {
+//         const { userName } = req.params;
+//         // const { userInfo, user_Id } = await getUserByUserName(req, res, userName);
+//         // const userTasks = await getUserTasks(user_Id);
+//         res.status(200).json(userTasks);
+//         return userTasks;
+//     } catch (error) {
+//         res.status(400).json({ message: error.message });
+//     }
+// }
 
-export const getUserByUserName = async (userName) => {
+export const getUserByUserName = async (req, res) => {
     try {
         console.log("Getting user");
-        // const { userName } = req.params;
+        const { userName } = req.params;
         console.log(userName);
         const user = await userCollection.find({ userName: userName }).toArray();
-        const userDetails = user[0];
+        console.log(user);
+        if (user.length > 0) {
+            const userDetails = user[0];
+            const user_Id = userDetails.user_Id;
+            const userTasks = await getUserTasks(user_Id);
+            console.log(userTasks);
+            res.status(200).json(userTasks);
+            // return {
+            //     userInfo: userDetails,
+            //     user_Id: userDetails.user_Id
+            // }
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+        // } else {
+        //     res.status(404).json({ message: 'User not found' });
+        // }
         // console.log(user);
         // if (userDetails.userName) {
         //     response.userName = userDetails.userName;
@@ -93,10 +109,10 @@ export const getUserByUserName = async (userName) => {
         // }
 
         // const tasks = await getUserTasks(userDetails.user_Id);
-        return {
-            userInfo: userDetails,
-            user_Id: userDetails.user_Id
-        }
+        // return {
+        //     userInfo: userDetails,
+        //     user_Id: userDetails.user_Id
+        // }
 
         // res.status(200).json(userDetails);
         // return user;
@@ -153,28 +169,30 @@ export const getTask = async (req, res) => {
 
 export const createUser = async (req, res) => {
     try {
-        const user = await ToDoCollection.create(req.body);
+        console.log('Creating user');
+        console.log(req.body);
+        const user = await userCollection.insertOne(req.body);
         res.status(201).send(user);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 }
 
-export const handleUpdateItem = async (req, res) => {
-    try {
-        const { id } = req.params;
-        console.log(id);
-        console.log("req.body", req.body);
-        // if (req.body.title) {
-        //     parameter = req.body.title;
-        // }
-        const updated = await updateTaskTitle(req, res, id);
-        res.status(200).json({ updated });
+// export const handleUpdateItem = async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         console.log(id);
+//         console.log("req.body", req.body);
+//         // if (req.body.title) {
+//         //     parameter = req.body.title;
+//         // }
+//         const updated = await updateTaskTitle(req, res, id);
+//         res.status(200).json({ updated });
 
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-}
+//     } catch (error) {
+//         res.status(400).json({ message: error.message });
+//     }
+// }
 
 export const updateTask = async (req, res, id) => {
     try {

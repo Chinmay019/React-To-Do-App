@@ -1,10 +1,12 @@
 import express from "express"
-import { getAllUsers, getTask, getUserById, createUser, updateTask, getUserByUserName, deleteTask, updateUserTasks, createTask, getUserInfo, handleUpdateItem } from "./controller/controller.js";
+import { getAllUsers, getTask, getUserById, createUser, updateTask, getUserByUserName, deleteTask, updateUserTasks, createTask } from "./controller/controller.js";
 // import router from "./routes/route.js";
 import cors from "cors";
 const app = express();
 
 app.use(express.json());
+
+// app.use(express.urlencoded());
 
 app.use(cors());
 
@@ -14,7 +16,7 @@ app.get('/users', getAllUsers);
 
 // app.get("/users/:id", getUserById)
 
-app.get("/users/:userName", getUserInfo);
+app.get("/users/:userName", getUserByUserName);
 
 app.get("/tasks/:id", getTask)
 
