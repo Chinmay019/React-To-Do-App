@@ -178,22 +178,6 @@ export const createUser = async (req, res) => {
     }
 }
 
-// export const handleUpdateItem = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         console.log(id);
-//         console.log("req.body", req.body);
-//         // if (req.body.title) {
-//         //     parameter = req.body.title;
-//         // }
-//         const updated = await updateTaskTitle(req, res, id);
-//         res.status(200).json({ updated });
-
-//     } catch (error) {
-//         res.status(400).json({ message: error.message });
-//     }
-// }
-
 export const updateTask = async (req, res, id) => {
     try {
         const { id } = req.params;
@@ -219,23 +203,6 @@ export const deleteTask = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 }
-
-// export const updateUserTasks = async (req, res) => {
-//     try {
-//         console.log("Updating user tasks");
-//         const { userName, id } = req.params;
-//         console.log(id);
-//         // const user = await ToDoCollection.findById({ userName: userName });
-//         // console.log(user);
-//         const tasks = req.body;
-//         console.log(tasks);
-//         const updatedTasks = await ToDoCollection.updateOne({ "_id": id }, { $set: { tasks: tasks } }, { new: true });
-//         console.log("task : ", updatedTasks);
-//         res.status(200).json(updatedTasks);
-//     } catch (error) {
-//         res.status(400).json({ message: error.message });
-//     }
-// }
 
 export const createTask = async (req, res) => {
     try {

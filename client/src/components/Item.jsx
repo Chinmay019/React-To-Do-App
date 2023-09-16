@@ -12,11 +12,28 @@ import {
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import CustomCard from "../shared/CustomCard";
 import DeleteDialog from "./DeleteDialog";
+import { updateTask } from "../context/TodoActions";
 
 function Item({ item }) {
-  const { deleteItem, completeItem, editItem } = useContext(ToDoContext);
+  const { dispatch } = useContext(ToDoContext);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const completeItem = async (item) => {
+    if (item.completed === "true") {
+      item.completed = "false";
+    } else {
+      item.completed = "true";
+    }
+    await updateTask(item);
+    dispatch({
+      type: "UPDATE_TASK",
+      payload: {
+        id: item._id,
+        data: item,
+      },
+    });
+  };
 
   return (
     <CustomCard>
@@ -46,14 +63,7 @@ function Item({ item }) {
               </div>
             )}
           </div>
-          <div
-            className={"task-title"}
-            onClick={() => {
-              editItem(item);
-            }}
-          >
-            {item.title}
-          </div>
+          <div className={"task-title"}>{item.title}</div>
           <div className="edit-container">
             <button onClick={() => setShowEditModal(true)} className="complete">
               <BiEdit />
@@ -67,10 +77,7 @@ function Item({ item }) {
             item={item}
           />
           <div className="complete-container">
-            <button
-              onClick={() => completeItem(item._id, item)}
-              className="complete"
-            >
+            <button onClick={() => completeItem(item)} className="complete">
               <FaCheck />
             </button>
           </div>

@@ -21,34 +21,30 @@ const TodoReducer = (state, action) => {
         item: action.payload.item,
         edit: true,
       };
-    case "UPDATE_PRIORITY":
-      return {
-        ...state,
-        taskList: state.taskList.map((task) => {
-          if (task._id === action.payload) {
-            task.priority = !task.priority;
-          }
-          return task;
-        }),
-      };
+    // case "UPDATE_PRIORITY":
+    //   return {
+    //     ...state,
+    //     taskList: state.taskList.map((task) => {
+    //       if (task._id === action.payload) {
+    //         task.priority = !task.priority;
+    //       }
+    //       return task;
+    //     }),
+    //   };
     case "UPDATE_TASK":
       return {
         ...state,
-        taskList: state.taskList.map((task) =>
-          task._id === action.payload.id
-            ? { ...task, ...action.payload.data }
-            : task
-        ),
+        taskList: state.taskList.map((task) => {
+          if (task._id === action.payload.id) {
+            return action.payload.data;
+          }
+          return task;
+        }),
       };
     case "SET_LOADING":
       return {
         ...state,
         loading: action.payload,
-      };
-    case "COMPLETE_ITEM":
-      return {
-        ...state,
-        // TODO
       };
     case "SET_USERNAME":
       return {

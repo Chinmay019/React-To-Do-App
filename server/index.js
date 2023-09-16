@@ -26,8 +26,6 @@ app.post("/tasks/:userId", createTask)
 
 app.put("/tasks/:id", updateTask)
 
-// app.put("/users/:userName/:id", updateUserTasks)
-
 app.delete("/tasks/:id", deleteTask)
 
 app.listen(PORT, () => { console.log("Port running on : " + PORT); });
