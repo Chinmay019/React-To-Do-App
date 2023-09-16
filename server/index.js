@@ -22,7 +22,7 @@ app.get("/tasks/:id", getTask)
 
 app.post("/users", createUser)
 
-app.post("/users/:userName", createTask)
+app.post("/tasks/:userId", createTask)
 
 app.put("/tasks/:id", updateTask)
 

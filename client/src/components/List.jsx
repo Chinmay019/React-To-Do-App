@@ -4,7 +4,7 @@ import { useContext } from "react";
 import Loader from "../shared/Loader";
 import ToDoContext from "../context/ToDoContext";
 import LoginModal from "./LoginModal";
-import { fetchTasks, getUserTasks } from "../context/TodoActions";
+import { getUserTasks } from "../context/TodoActions";
 
 function List() {
   const {

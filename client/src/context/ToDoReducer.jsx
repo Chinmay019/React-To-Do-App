@@ -10,12 +10,12 @@ const TodoReducer = (state, action) => {
         ...state,
         taskList: state.taskList.filter((task) => task.id !== action.payload),
       };
-    case "ADD_ITEM":
+    case "CREATE_TASK":
       return {
         ...state,
         taskList: [action.payload, ...state.taskList],
       };
-    case "EDIT_ITEM":
+    case "EDIT_TASK":
       return {
         ...state,
         item: action.payload.item,
@@ -48,6 +48,7 @@ const TodoReducer = (state, action) => {
     case "COMPLETE_ITEM":
       return {
         ...state,
+        // TODO
       };
     case "SET_USERNAME":
       return {

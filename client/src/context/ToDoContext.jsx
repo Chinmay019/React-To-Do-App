@@ -64,18 +64,18 @@ export const ToDoProvider = ({ children }) => {
   //   setLoading(false);
   // };
 
-  const addItem = async (newTodo) => {
-    const response = await fetch(`${commonURL}/tasks`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTodo),
-    });
-    const data = await response.json();
-    return data;
-    // setTaskList([data, ...taskList]);
-  };
+  // const addItem = async (newTodo) => {
+  //   const response = await fetch(`${commonURL}/tasks`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(newTodo),
+  //   });
+  //   const data = await response.json();
+  //   return data;
+  //   // setTaskList([data, ...taskList]);
+  // };
 
   // const editItem = (item) => {
   //   setItemEdit({
@@ -145,7 +145,7 @@ export const ToDoProvider = ({ children }) => {
         ...state,
         dispatch,
         // deleteItem,
-        addItem,
+        // addItem,
         // completeItem,
         // editItem,
         // updateState,

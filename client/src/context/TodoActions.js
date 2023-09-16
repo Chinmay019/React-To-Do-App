@@ -45,10 +45,31 @@ export const getTask = async (id) => {
     return data;
 }
 
-const fetchTasks = async () => {
-    const response = await fetch(`${commonURL}/tasks?_sort=id&_order=asc`);
-    const tasks = await response.json();
-    return tasks;
+// const fetchTasks = async () => {
+//     const response = await fetch(`${commonURL}/tasks?_sort=id&_order=asc`);
+//     const tasks = await response.json();
+//     return tasks;
+// };
+
+export const createTask = async (userId, newTodo) => {
+    const response = await fetch(`${commonBackendURL}/tasks/${userId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTodo),
+    });
+    const data = await response.json();
+    console.log(data);
+    if (data && data.acknowledged) {
+        data.status = 201;
+        console.log(data);
+    } else {
+        data.status = 404;
+        console.log(data);
+    }
+    return data;
+    // setTaskList([data, ...taskList]);
 };
 
 export const updateTask = async (updatedItem) => {
@@ -112,5 +133,3 @@ const remainingCount = (taskList) => {
         return acc + (curr.completed ? 0 : 1);
     }, 0)
 };
-
-export { fetchTasks }

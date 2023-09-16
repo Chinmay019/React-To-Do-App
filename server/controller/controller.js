@@ -238,7 +238,8 @@ export const updateUserTasks = async (req, res) => {
 
 export const createTask = async (req, res) => {
     try {
-        const task = await TaskCollection.create(req.body);
+        const { userId } = req.params;
+        const task = await taskCollection.insertOne(req.body);
         res.status(201).send(task);
     } catch (error) {
         res.status(400).json({ message: error.message });
