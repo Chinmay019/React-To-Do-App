@@ -1,5 +1,5 @@
 import express from "express"
-import { getAllUsers, getTask, getUserById, createUser, updateTask, getUserByUserName, deleteTask, updateUserTasks, createTask } from "./controller/controller.js";
+import { getAllUsers, getTask, getUserById, createUser, updateTask, getUserByUserName, deleteTask, createTask } from "./controller/controller.js";
 // import router from "./routes/route.js";
 import cors from "cors";
 const app = express();
@@ -26,7 +26,7 @@ app.post("/tasks/:userId", createTask)
 
 app.put("/tasks/:id", updateTask)
 
-app.put("/users/:userName/:id", updateUserTasks)
+// app.put("/users/:userName/:id", updateUserTasks)
 
 app.delete("/tasks/:id", deleteTask)
 

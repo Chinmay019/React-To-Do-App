@@ -7,22 +7,17 @@ import ToDoContext from "../context/ToDoContext";
 function DeleteDialog(props) {
   const { dispatch, user_OId, taskList, userName } = useContext(ToDoContext);
 
-  const buildPayload = () => {
-    const filteredList = taskList.filter((task) => task._id !== props.id);
-    // tasks.push(...filteredList);
-    return filteredList;
-  };
-
-  const handleDeleteClick = (e) => {
+  const handleDeleteClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "SET_LOADING", payload: true });
-    // const data = deleteItem(props.id);
-    // console.log(data);
-    const payload = buildPayload();
-    console.log("payload: ", payload);
-    const userData = updateUserTasks(userName, user_OId, payload);
-    console.log("userData: ", userData);
-    dispatch({ type: "SET_LOADING", payload: false });
+    const data = await deleteItem(props.id);
+    console.log(data);
+    if (data.status == 201) {
+      dispatch({ type: "DELETE_ITEM", payload: props.id });
+      dispatch({ type: "SET_LOADING", payload: false });
+    } else if (data.status == 404) {
+      dispatch({ type: "SET_LOADING", payload: true });
+    }
     props.close();
   };
   return (

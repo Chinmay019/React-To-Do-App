@@ -212,29 +212,30 @@ export const updateTask = async (req, res, id) => {
 export const deleteTask = async (req, res) => {
     try {
         const { id } = req.params;
-        const task = await TaskCollection.deleteOne({ "_id": id });
+        console.log(id);
+        const task = await taskCollection.deleteOne({ "_id": new ObjectId(id) });
         res.status(200).json(task);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 }
 
-export const updateUserTasks = async (req, res) => {
-    try {
-        console.log("Updating user tasks");
-        const { userName, id } = req.params;
-        console.log(id);
-        // const user = await ToDoCollection.findById({ userName: userName });
-        // console.log(user);
-        const tasks = req.body;
-        console.log(tasks);
-        const updatedTasks = await ToDoCollection.updateOne({ "_id": id }, { $set: { tasks: tasks } }, { new: true });
-        console.log("task : ", updatedTasks);
-        res.status(200).json(updatedTasks);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-}
+// export const updateUserTasks = async (req, res) => {
+//     try {
+//         console.log("Updating user tasks");
+//         const { userName, id } = req.params;
+//         console.log(id);
+//         // const user = await ToDoCollection.findById({ userName: userName });
+//         // console.log(user);
+//         const tasks = req.body;
+//         console.log(tasks);
+//         const updatedTasks = await ToDoCollection.updateOne({ "_id": id }, { $set: { tasks: tasks } }, { new: true });
+//         console.log("task : ", updatedTasks);
+//         res.status(200).json(updatedTasks);
+//     } catch (error) {
+//         res.status(400).json({ message: error.message });
+//     }
+// }
 
 export const createTask = async (req, res) => {
     try {

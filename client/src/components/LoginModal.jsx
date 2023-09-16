@@ -99,15 +99,34 @@ function LoginModal() {
             className="error-message"
             style={{ display: showErrorMessage ? "block" : "none" }}
           >
-            Test error message
+            <span>Please enter a valid username</span>
           </div>
           <Form noValidate>
             {/* validated={validated} onSubmit={handleSubmit} */}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Text id="passwordHelpBlock" className="mb-3 text-xl">
-                Your username must be 3-20 characters long, contain letters and
-                numbers, and must not contain spaces, special characters, or
-                emoji.
+                <span>How it works</span>
+                <ul>
+                  <li>For every new username a database entry gets created.</li>
+                  <li>No password is required to login</li>
+                  <li>
+                    ToDos added are mapped to username. So if you want to
+                    persist your todos, try remembering your username 😜
+                  </li>
+                  <li>
+                    Usernames are not encrypted as of now. Avoid using your own
+                    names as your username.
+                  </li>
+                  <li>Be as creative as possible :)</li>
+                </ul>
+              </Form.Text>
+              <Form.Text id="passwordHelpBlock" className="mb-3 text-xl">
+                <h5>Basic Requirements for a UserName: </h5>
+                <ul>
+                  <li>
+                    Must be at least 3 characters and at most 15 characters
+                  </li>
+                </ul>
               </Form.Text>
               <Form.Control
                 type="text"

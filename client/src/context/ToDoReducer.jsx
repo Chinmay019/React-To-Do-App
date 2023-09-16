@@ -8,7 +8,7 @@ const TodoReducer = (state, action) => {
     case "DELETE_ITEM":
       return {
         ...state,
-        taskList: state.taskList.filter((task) => task.id !== action.payload),
+        taskList: state.taskList.filter((task) => task._id !== action.payload),
       };
     case "CREATE_TASK":
       return {
@@ -25,7 +25,7 @@ const TodoReducer = (state, action) => {
       return {
         ...state,
         taskList: state.taskList.map((task) => {
-          if (task.id === action.payload) {
+          if (task._id === action.payload) {
             task.priority = !task.priority;
           }
           return task;
@@ -35,7 +35,7 @@ const TodoReducer = (state, action) => {
       return {
         ...state,
         taskList: state.taskList.map((task) =>
-          task.id === action.payload.id
+          task._id === action.payload.id
             ? { ...task, ...action.payload.data }
             : task
         ),

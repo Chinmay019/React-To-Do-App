@@ -60,16 +60,12 @@ export const createTask = async (userId, newTodo) => {
         body: JSON.stringify(newTodo),
     });
     const data = await response.json();
-    console.log(data);
     if (data && data.acknowledged) {
         data.status = 201;
-        console.log(data);
     } else {
         data.status = 404;
-        console.log(data);
     }
     return data;
-    // setTaskList([data, ...taskList]);
 };
 
 export const updateTask = async (updatedItem) => {
@@ -89,7 +85,13 @@ export const updateTask = async (updatedItem) => {
 export const deleteItem = async (id) => {
     console.log(id);
     const resp = await fetch(`${commonBackendURL}/tasks/${id}`, { method: "DELETE" });
-    return resp.json();
+    const data = await resp.json();
+    if (data.acknowledged && data.deletedCount) {
+        data.status = 201;
+    } else {
+        data.status = 404;
+    }
+    return data;
 };
 
 export const updateUserTasks = async (userName, userId, payload) => {
