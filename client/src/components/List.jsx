@@ -1,35 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Item from "./Item";
 import { useContext } from "react";
 import Loader from "../shared/Loader";
 import ToDoContext from "../context/ToDoContext";
 import LoginModal from "./LoginModal";
-import { getUserTasks } from "../context/TodoActions";
 
 function List({ taskList, currentView }) {
-  const {
-    completed,
-    remaining,
-    userName,
-    priority,
-    loading,
-    isLoggedIn,
-    dispatch,
-    isExistingUser,
-  } = useContext(ToDoContext);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-
-  const renderLoginModal = () => {
-    if (!isLoggedIn) {
-      setShowLoginModal(!isLoggedIn);
-      return (
-        <LoginModal
-          show={showLoginModal}
-          close={() => setShowLoginModal(false)}
-        />
-      );
-    }
-  };
+  const { completed, remaining, priority, loading } = useContext(ToDoContext);
 
   if (loading) {
     return <Loader />;

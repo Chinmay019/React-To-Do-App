@@ -1,10 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { Link, redirect, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import ToDoContext from "../context/ToDoContext";
-import Counter from "./Counter";
 import { v4 as uuidv4 } from "uuid";
 import { createUser, checkIfExistingUser } from "../context/TodoActions";
 
@@ -13,22 +11,17 @@ function LoginModal() {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [user, setUser] = useState("");
   const { isLoggedIn, dispatch, isExistingUser } = useContext(ToDoContext);
-  const navigate = useNavigate();
   useEffect(() => {
     renderLoginModal();
   }, [showLoginModal]);
 
   const createUserIfNotExisting = async () => {
     const { existingUser, userData } = await checkIfExistingUser(user);
-    console.log(existingUser);
     dispatch({ type: "SET_EXISTING_USER_STATUS", payload: existingUser });
     dispatch({ type: "SET_LOGGED_IN", payload: true });
-    console.log(userData);
     if (!existingUser) {
       const userId = uuidv4();
-      console.log(userId);
       const data = await createUser(user, userId);
-      console.log(data);
     } else {
       dispatch({
         type: "SET_USER_ID",

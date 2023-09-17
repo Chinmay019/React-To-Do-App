@@ -15,7 +15,7 @@ import DeleteDialog from "./DeleteDialog";
 import { updateTask, refreshCount } from "../context/TodoActions";
 
 function Item({ item }) {
-  const { dispatch } = useContext(ToDoContext);
+  const { dispatch, taskList } = useContext(ToDoContext);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -68,7 +68,6 @@ function Item({ item }) {
           }`}
         >
           <div onClick={() => updatePriority(item)}>
-            {/*onClick={() => updateState(item)} */}
             {item.completed == "true" ? (
               <div title="Completed">
                 <BsFillCheckCircleFill className="star" />
