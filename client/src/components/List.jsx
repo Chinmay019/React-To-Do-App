@@ -7,7 +7,6 @@ import LoginModal from "./LoginModal";
 import { getUserTasks } from "../context/TodoActions";
 
 function List({ taskList, currentView }) {
-  console.log(taskList);
   const {
     completed,
     remaining,
@@ -42,36 +41,20 @@ function List({ taskList, currentView }) {
     return (
       <div className="empty-task-list">No Tasks Left. Hurray!!!!!!!!!!!!!!</div>
     );
-  } else if (
-    !loading &&
-    taskList.length &&
-    !remaining &&
-    currentView === "remaining" &&
-    completed == taskList.length
-  ) {
+  } else if (!loading && !remaining && currentView === "remaining") {
     return (
       <div className="empty-task-list">
         You have completed all your tasks. <br />
         Way to go champ!!!!!!!
       </div>
     );
-  } else if (
-    !loading &&
-    taskList.length &&
-    !priority &&
-    currentView === "priority"
-  ) {
+  } else if (!loading && !priority && currentView === "priority") {
     return (
       <div className="empty-task-list">
         No Priority Tasks Left. <br />I see this as an absolute win!!!!!
       </div>
     );
-  } else if (
-    !loading &&
-    taskList.length &&
-    !completed &&
-    currentView === "completed"
-  ) {
+  } else if (!loading && !completed && currentView === "completed") {
     return (
       <div className="empty-task-list">
         Tasks yet to be Completed. <br />

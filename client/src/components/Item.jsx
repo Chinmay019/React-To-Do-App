@@ -12,7 +12,7 @@ import {
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import CustomCard from "../shared/CustomCard";
 import DeleteDialog from "./DeleteDialog";
-import { updateTask } from "../context/TodoActions";
+import { updateTask, refreshCount } from "../context/TodoActions";
 
 function Item({ item }) {
   const { dispatch } = useContext(ToDoContext);
@@ -33,6 +33,8 @@ function Item({ item }) {
         data: item,
       },
     });
+    const count = refreshCount(taskList);
+    dispatch({ type: "SET_UPDATED_COUNT", payload: count });
   };
 
   const updatePriority = async (item) => {
@@ -49,6 +51,8 @@ function Item({ item }) {
         data: item,
       },
     });
+    const count = refreshCount(taskList);
+    dispatch({ type: "SET_UPDATED_COUNT", payload: count });
   };
 
   return (

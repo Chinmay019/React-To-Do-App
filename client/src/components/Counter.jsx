@@ -149,7 +149,7 @@ function Counter() {
         </ul>
       </div>
       <hr />
-      <List taskList={filteredList} currentView={currentView} />
+      <List taskList={filteredList} currentView={filter} />
     </div>
   );
 }

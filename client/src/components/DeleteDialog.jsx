@@ -1,7 +1,11 @@
 import React, { useContext } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { deleteItem, updateUserTasks } from "../context/TodoActions";
+import {
+  deleteItem,
+  updateUserTasks,
+  refreshCount,
+} from "../context/TodoActions";
 import ToDoContext from "../context/ToDoContext";
 
 function DeleteDialog(props) {
@@ -15,6 +19,8 @@ function DeleteDialog(props) {
     if (data.status == 201) {
       dispatch({ type: "DELETE_ITEM", payload: props.id });
       dispatch({ type: "SET_LOADING", payload: false });
+      const count = refreshCount(taskList);
+      dispatch({ type: "SET_UPDATED_COUNT", payload: count });
     } else if (data.status == 404) {
       dispatch({ type: "SET_LOADING", payload: true });
     }
