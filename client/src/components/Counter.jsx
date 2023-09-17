@@ -44,7 +44,6 @@ function Counter() {
   }, [filter, isLoggedIn, taskList]);
 
   const filterTasks = (filter) => {
-    console.log(filter, taskList);
     const count = refreshCount(taskList);
     dispatch({ type: "SET_UPDATED_COUNT", payload: count });
     if (filter === "all") {
@@ -56,9 +55,7 @@ function Counter() {
     } else if (filter === "completed") {
       return taskList.filter((task) => task.completed === "true");
     } else if (filter === "remaining") {
-      return taskList.filter(
-        (task) => task.completed === "false" && task.priority === "false"
-      );
+      return taskList.filter((task) => task.completed === "false");
     }
   };
 

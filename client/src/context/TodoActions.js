@@ -1,4 +1,3 @@
-const commonURL = `http://localhost:3509`;
 const commonBackendURL = `http://localhost:11243`;
 
 export const getUserTasks = async (userName) => {
@@ -7,7 +6,6 @@ export const getUserTasks = async (userName) => {
     console.log(data);
     const userInfo = data[0];
     return { taskList: userInfo.userTasks, userId: userInfo.user_Id, userName: userInfo.userName, _id: userInfo._id };
-    // return data;
 }
 
 export const createUser = async (userName, userId) => {
@@ -44,12 +42,6 @@ export const getTask = async (id) => {
     const data = await resp.json();
     return data;
 }
-
-// const fetchTasks = async () => {
-//     const response = await fetch(`${commonURL}/tasks?_sort=id&_order=asc`);
-//     const tasks = await response.json();
-//     return tasks;
-// };
 
 export const createTask = async (userId, newTodo) => {
     const response = await fetch(`${commonBackendURL}/tasks/${userId}`, {
