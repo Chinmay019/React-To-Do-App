@@ -21,16 +21,6 @@ const TodoReducer = (state, action) => {
         item: action.payload.item,
         edit: true,
       };
-    // case "UPDATE_PRIORITY":
-    //   return {
-    //     ...state,
-    //     taskList: state.taskList.map((task) => {
-    //       if (task._id === action.payload) {
-    //         task.priority = !task.priority;
-    //       }
-    //       return task;
-    //     }),
-    //   };
     case "UPDATE_TASK":
       return {
         ...state,
@@ -66,6 +56,13 @@ const TodoReducer = (state, action) => {
       return {
         ...state,
         isExistingUser: action.payload,
+      };
+    case "SET_UPDATED_COUNT":
+      return {
+        ...state,
+        priority: action.payload.priorityCount,
+        remaining: action.payload.remainingCount,
+        completed: action.payload.completedCount,
       };
     default:
       return state;

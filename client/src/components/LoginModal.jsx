@@ -1,8 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import ToDoContext from "../context/ToDoContext";
+import Counter from "./Counter";
 import { v4 as uuidv4 } from "uuid";
 import { createUser, checkIfExistingUser } from "../context/TodoActions";
 
@@ -10,25 +12,17 @@ function LoginModal() {
   const [showLoginModal, setShowLoginModal] = useState(true);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [user, setUser] = useState("");
-  const [validated, setValidated] = useState(false);
   const { isLoggedIn, dispatch, isExistingUser } = useContext(ToDoContext);
+  const navigate = useNavigate();
   useEffect(() => {
     renderLoginModal();
   }, [showLoginModal]);
 
-  // const handleSubmit = (event) => {
-  //   const form = event.currentTarget;
-  //   if (form.checkValidity() === false) {
-  //     event.preventDefault();
-  //     event.stopPropagation();
-  //   }
-
-  //   setValidated(true);
-  // };
-
   const createUserIfNotExisting = async () => {
     const { existingUser, userData } = await checkIfExistingUser(user);
     console.log(existingUser);
+    dispatch({ type: "SET_EXISTING_USER_STATUS", payload: existingUser });
+    dispatch({ type: "SET_LOGGED_IN", payload: true });
     console.log(userData);
     if (!existingUser) {
       const userId = uuidv4();
@@ -40,10 +34,8 @@ function LoginModal() {
         type: "SET_USER_ID",
         payload: { userId: userData.user_Id, user_OId: userData._id },
       });
-      dispatch({ type: "SET_LOGGED_IN", payload: true });
       dispatch({ type: "SET_TASKS_FROM_DB", payload: userData.userTasks });
     }
-    dispatch({ type: "SET_EXISTING_USER_STATUS", payload: existingUser });
   };
 
   const renderLoginModal = () => {
@@ -71,7 +63,6 @@ function LoginModal() {
   };
   const handleChange = (e) => {
     setUser(e.target.value);
-    console.log(e.target.value);
   };
   const validUserName = () => {
     if (user.length > 3) {
@@ -102,7 +93,6 @@ function LoginModal() {
             <span>Please enter a valid username</span>
           </div>
           <Form noValidate>
-            {/* validated={validated} onSubmit={handleSubmit} */}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Text id="passwordHelpBlock" className="mb-3 text-xl">
                 <span>How it works</span>

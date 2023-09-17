@@ -22,10 +22,9 @@ function App() {
               path="/"
               element={
                 <>
-                  <LoginModal />
                   <Input />
+                  <LoginModal />
                   <Counter />
-                  <List />
                 </>
               }
             ></Route>

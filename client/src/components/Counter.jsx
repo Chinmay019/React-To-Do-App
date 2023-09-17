@@ -1,22 +1,66 @@
 import React, { useState, useContext, useEffect } from "react";
 import ToDoContext from "../context/ToDoContext";
-import { Link } from "react-router-dom";
+import { refreshCount } from "../context/TodoActions";
+import List from "./List";
 
 function Counter() {
+  console.log("Counter");
   const {
     taskList,
-    // filterTasks,
     priority,
     remaining,
     completed,
+    isLoggedIn,
+    isExistingUser,
+    dispatch,
+    userName,
     currentView,
-    setCurrentView,
   } = useContext(ToDoContext);
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState(currentView);
+  const [filteredList, setFilteredList] = useState(taskList);
+
   useEffect(() => {
-    // filterTasks(filter);
+    if (isLoggedIn) {
+      if (!isExistingUser) {
+        const getTaskList = async () => {
+          dispatch({ type: "SET_LOADING", payload: true });
+          const { userId, _id, taskList } = await getUserTasks(userName);
+          console.log(data);
+          dispatch({
+            type: "SET_USER_ID",
+            payload: { userId: userId, user_OId: _id },
+          });
+          dispatch({ type: "SET_TASKS_FROM_DB", payload: taskList });
+          dispatch({ type: "SET_LOADING", payload: false });
+        };
+        getTaskList();
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    setFilteredList(filterTasks(filter));
     handleClick(filter);
-  }, [filter]);
+  }, [filter, isLoggedIn, taskList]);
+
+  const filterTasks = (filter) => {
+    console.log(filter, taskList);
+    const count = refreshCount(taskList);
+    dispatch({ type: "SET_UPDATED_COUNT", payload: count });
+    if (filter === "all") {
+      return taskList;
+    } else if (filter === "priority") {
+      return taskList.filter(
+        (task) => task.priority === "true" && task.completed === "false"
+      );
+    } else if (filter === "completed") {
+      return taskList.filter((task) => task.completed === "true");
+    } else if (filter === "remaining") {
+      return taskList.filter(
+        (task) => task.completed === "false" && task.priority === "false"
+      );
+    }
+  };
 
   const handleClick = (value) => {
     document.querySelector(`#${value}`).classList.add("active");
@@ -39,7 +83,6 @@ function Counter() {
                   .classList.remove("active");
                 if (filter !== "all") {
                   setFilter("all");
-                  setCurrentView("all");
                 }
               }}
             >
@@ -59,7 +102,6 @@ function Counter() {
                     .querySelector(`#${[filter]}`)
                     .classList.remove("active");
                   setFilter("remaining");
-                  setCurrentView("remaining");
                 }
               }}
             >
@@ -79,7 +121,6 @@ function Counter() {
                     .querySelector(`#${[filter]}`)
                     .classList.remove("active");
                   setFilter("priority");
-                  setCurrentView("priority");
                 }
               }}
             >
@@ -99,7 +140,6 @@ function Counter() {
                     .querySelector(`#${[filter]}`)
                     .classList.remove("active");
                   setFilter("completed");
-                  setCurrentView("completed");
                 }
               }}
             >
@@ -109,6 +149,7 @@ function Counter() {
         </ul>
       </div>
       <hr />
+      <List taskList={filteredList} currentView={currentView} />
     </div>
   );
 }

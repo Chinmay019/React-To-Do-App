@@ -107,7 +107,7 @@ export const updateUserTasks = async (userName, userId, payload) => {
     return data;
 }
 
-const refreshCount = (taskList) => {
+export const refreshCount = (taskList) => {
     const prioCount = priorityCount(taskList);
     const compCount = completedCount(taskList);
     const remCount = remainingCount(taskList);
@@ -120,18 +120,18 @@ const refreshCount = (taskList) => {
 
 const priorityCount = (taskList) => {
     return taskList.reduce((acc, curr) => {
-        return acc + (curr.priority && !curr.completed ? 1 : 0);
+        return acc + (curr.priority === "true" && curr.completed === "false" ? 1 : 0);
     }, 0)
 };
 
 const completedCount = (taskList) => {
     return taskList.reduce((acc, curr) => {
-        return acc + (curr.completed ? 1 : 0);
+        return acc + (curr.completed === "true" ? 1 : 0);
     }, 0)
 };
 
 const remainingCount = (taskList) => {
     return taskList.reduce((acc, curr) => {
-        return acc + (curr.completed ? 0 : 1);
+        return acc + (curr.completed === "true" ? 0 : 1);
     }, 0)
 };

@@ -35,6 +35,22 @@ function Item({ item }) {
     });
   };
 
+  const updatePriority = async (item) => {
+    if (item.priority === "true") {
+      item.priority = "false";
+    } else {
+      item.priority = "true";
+    }
+    await updateTask(item);
+    dispatch({
+      type: "UPDATE_TASK",
+      payload: {
+        id: item._id,
+        data: item,
+      },
+    });
+  };
+
   return (
     <CustomCard>
       <div>
@@ -47,19 +63,19 @@ function Item({ item }) {
               : "none"
           }`}
         >
-          <div>
+          <div onClick={() => updatePriority(item)}>
             {/*onClick={() => updateState(item)} */}
             {item.completed == "true" ? (
               <div title="Completed">
-                <BsFillCheckCircleFill className="completed-star" />
+                <BsFillCheckCircleFill className="star" />
               </div>
-            ) : !item.completed && !item.priority ? (
+            ) : item.completed === "false" && item.priority === "false" ? (
               <div title="Non Priority">
                 <FaRegStar className="priority-star" />
               </div>
             ) : (
               <div title="Priority">
-                <FaStar className="priority-star" />
+                <FaStar className="star" />
               </div>
             )}
           </div>
