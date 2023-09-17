@@ -15,7 +15,6 @@ function DeleteDialog(props) {
     e.preventDefault();
     dispatch({ type: "SET_LOADING", payload: true });
     const data = await deleteItem(props.id);
-    console.log(data);
     if (data.status == 201) {
       dispatch({ type: "DELETE_ITEM", payload: props.id });
       dispatch({ type: "SET_LOADING", payload: false });

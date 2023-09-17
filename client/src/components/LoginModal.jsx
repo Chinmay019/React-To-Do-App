@@ -59,7 +59,6 @@ function LoginModal() {
   };
   const validUserName = () => {
     if (user.length > 3) {
-      console.log(user);
       return true;
     }
     return false;

@@ -3,7 +3,6 @@ const commonBackendURL = `http://localhost:11243`;
 export const getUserTasks = async (userName) => {
     const resp = await fetch(`${commonBackendURL}/users/${userName}`)
     const data = await resp.json();
-    console.log(data);
     const userInfo = data[0];
     return { taskList: userInfo.userTasks, userId: userInfo.user_Id, userName: userInfo.userName, _id: userInfo._id };
 }
@@ -33,7 +32,6 @@ export const checkIfExistingUser = async (userName) => {
     if (resp.status === 200) {
         userExists = true;
     }
-    console.log("existing user data", data);
     return { existingUser: userExists, userData: userInfo };
 }
 
@@ -61,7 +59,6 @@ export const createTask = async (userId, newTodo) => {
 };
 
 export const updateTask = async (updatedItem) => {
-    console.log('updateTask', updatedItem);
     const id = updatedItem._id;
     const response = await fetch(`${commonBackendURL}/tasks/${id}`, {
         method: "PUT",
@@ -75,7 +72,6 @@ export const updateTask = async (updatedItem) => {
 };
 
 export const deleteItem = async (id) => {
-    console.log(id);
     const resp = await fetch(`${commonBackendURL}/tasks/${id}`, { method: "DELETE" });
     const data = await resp.json();
     if (data.acknowledged && data.deletedCount) {
@@ -95,7 +91,6 @@ export const updateUserTasks = async (userName, userId, payload) => {
         }
     })
     const data = await resp.json();
-    console.log(data);
     return data;
 }
 

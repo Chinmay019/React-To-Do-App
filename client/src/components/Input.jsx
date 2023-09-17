@@ -34,7 +34,6 @@ function FormItem() {
       };
 
       const data = await createTask(userId, newToDo);
-      console.log(data);
       if (data.status == 201) {
         newToDo._id = data.insertedId;
         dispatch({ type: "CREATE_TASK", payload: newToDo });

@@ -41,7 +41,6 @@ export const getUserByUserName = async (req, res) => {
             const userDetails = user[0];
             const user_Id = userDetails.user_Id;
             const userTasks = await getUserTasks(user_Id);
-            console.log(userTasks);
             res.status(200).json(userTasks);
         } else {
             res.status(404).json({ message: 'User not found' });

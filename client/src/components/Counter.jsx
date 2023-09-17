@@ -4,7 +4,6 @@ import { refreshCount } from "../context/TodoActions";
 import List from "./List";
 
 function Counter() {
-  console.log("Counter");
   const {
     taskList,
     priority,
@@ -25,7 +24,6 @@ function Counter() {
         const getTaskList = async () => {
           dispatch({ type: "SET_LOADING", payload: true });
           const { userId, _id, taskList } = await getUserTasks(userName);
-          console.log(data);
           dispatch({
             type: "SET_USER_ID",
             payload: { userId: userId, user_OId: _id },
