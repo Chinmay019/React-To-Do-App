@@ -1,5 +1,5 @@
 import express from "express"
-import { getAllUsers, getTask, getUserById, createUser, updateTask, getUserByUserName, deleteTask, createTask } from "./controller/controller.js";
+import { getAllUsers, getTask, createUser, updateTask, getUserByUserName, deleteTask, createTask } from "./controller/controller.js";
 import cors from "cors";
 const app = express();
 
